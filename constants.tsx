@@ -23,3 +23,6 @@ export const ICONS = {
     Sun: <Sun size={20} />,
     Moon: <Moon size={20} />
 };
+
+export const APP_URL: string | undefined = process.env.APP_URL;
+export const API_URL: string | undefined = `${APP_URL}/api`;
