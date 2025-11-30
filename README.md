@@ -46,7 +46,7 @@ TradeMind is a professional-grade trading journal application powered by the MER
 3.  **Google Gemini API Key** (Get one at [aistudio.google.com](https://aistudiocdn.com/))
 
 ### 1. Environment Configuration
-Create a `.env` file in the root directory. You can configure the API URL to point to a remote server for production.
+Create a `.env` file in the root directory.
 
 ```env
 # Database
@@ -55,11 +55,11 @@ MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/trademind
 # Security
 JWT_SECRET=your_super_secret_random_string
 
-# Backend Configuration (Port for the Node.js server)
+# Backend Configuration
 PORT=5000
 
-# Frontend Configuration (Optional - Defaults to http://localhost:5000/api if empty)
-# Use this when deploying the frontend to a different domain than the backend
+# Frontend Configuration (Optional)
+# Point this to your live backend URL when deploying the frontend
 API_URL=http://localhost:5000/api
 
 # AI Configuration
@@ -67,23 +67,50 @@ API_KEY=your_google_gemini_api_key
 ```
 
 ### 2. Backend Setup
-The backend handles authentication and database operations.
+The backend handles authentication, database connections, and API routes.
 
 ```bash
-# Install dependencies
+# 1. Navigate to the root (or backend folder if you structure it that way)
+# 2. Install backend dependencies
 npm install express mongoose cors dotenv bcryptjs jsonwebtoken
 
-# Start the server
+# 3. Start the server
 node backend/server.js
 ```
 *The server will run on `http://localhost:5000`*
 
 ### 3. Frontend Setup
-The frontend is built using ES Modules.
+To run the frontend locally using a modern build tool like **Vite**:
 
-1.  Ensure the backend is running.
-2.  Start your frontend development server.
-3.  **Sign Up:** Create a new account to start logging trades.
+1.  **Initialize Project:**
+    ```bash
+    npm create vite@latest client -- --template react-ts
+    cd client
+    ```
+
+2.  **Install Frontend Dependencies:**
+    You need to install the libraries used in the code:
+    ```bash
+    npm install axios @reduxjs/toolkit react-redux lucide-react recharts react-markdown @google/genai
+    ```
+
+3.  **Setup Tailwind CSS:**
+    If you are not using the CDN method (recommended for production), install Tailwind locally:
+    ```bash
+    npm install -D tailwindcss postcss autoprefixer
+    npx tailwindcss init -p
+    ```
+    *Configure your `tailwind.config.js` to scan your src files.*
+
+4.  **Add The Code:**
+    - Copy the `components`, `services`, `store`, `context`, `App.tsx`, `constants.tsx`, and `types.ts` files into your `src` folder.
+    - Ensure your `main.tsx` (or `index.tsx`) wraps the App in the Redux `Provider` and `ThemeProvider`.
+
+5.  **Run Development Server:**
+    ```bash
+    npm run dev
+    ```
+    *The frontend will typically run on `http://localhost:5173`. Open this URL in your browser.*
 
 ---
 
@@ -96,9 +123,10 @@ You can deploy the `backend` folder to services like **Render**, **Heroku**, or 
 
 ### Deploying the Frontend
 You can deploy the frontend to **Vercel**, **Netlify**, or AWS S3.
-1.  If your backend is hosted separately (e.g., on Render), you must set the `API_URL` environment variable during the frontend build process to point to your backend.
-    *   Example: `API_URL=https://my-trademind-backend.onrender.com/api`
-2.  Ensure your backend handles CORS (Cross-Origin Resource Sharing) correctly if the domains differ. The provided `server.js` enables CORS for all origins by default.
+1.  **Build Command:** `npm run build`
+2.  **Environment Variables:** If your backend is hosted separately (e.g., on Render), you **must** set the `API_URL` environment variable in your frontend hosting dashboard.
+    *   Example: `API_URL=https://my-trademind-api.onrender.com/api`
+3.  **CORS:** Ensure your backend handles CORS (Cross-Origin Resource Sharing) correctly for your frontend's domain.
 
 ---
 
@@ -129,11 +157,6 @@ You can deploy the frontend to **Vercel**, **Netlify**, or AWS S3.
 - Passwords are hashed using `bcrypt` before storage.
 - API requests are protected via JWT Bearer tokens.
 - **Note:** For a production deployment, ensure you implement strict CORS policies and secure HTTP headers.
-
----
-
-## 🤖 AI Prompt Engineering
-The application uses a specialized prompt located in `services/geminiService.ts` to instruct the model to act as a "Trading Psychologist and Technical Analyst," ensuring feedback is constructive and context-aware.
 
 ## 📄 License
 MIT
