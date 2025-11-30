@@ -65,13 +65,13 @@ const TradeForm: React.FC<TradeFormProps> = ({ onCancel, initialData }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 overflow-y-auto">
-      <div className="bg-slate-900 w-full max-w-2xl rounded-2xl border border-slate-700 shadow-2xl overflow-hidden animate-fade-in-up my-auto">
-        <div className="p-6 border-b border-slate-700 flex justify-between items-center bg-slate-800/50">
-          <h2 className="text-xl font-bold text-white">
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 overflow-y-auto">
+      <div className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-2xl border border-slate-200 dark:border-slate-700 shadow-2xl overflow-hidden animate-fade-in-up my-auto transition-colors duration-300">
+        <div className="p-6 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center bg-slate-50 dark:bg-slate-800/50">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">
             {initialData ? 'Edit Trade' : 'Log New Trade'}
           </h2>
-          <button onClick={onCancel} className="text-slate-400 hover:text-white transition-colors">
+          <button onClick={onCancel} className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
             {ICONS.Close}
           </button>
         </div>
@@ -80,7 +80,7 @@ const TradeForm: React.FC<TradeFormProps> = ({ onCancel, initialData }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Instrument */}
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-1">Instrument</label>
+              <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Instrument</label>
               <input
                 required
                 type="text"
@@ -88,38 +88,38 @@ const TradeForm: React.FC<TradeFormProps> = ({ onCancel, initialData }) => {
                 placeholder="e.g. BTCUSD"
                 value={formData.instrument}
                 onChange={handleInputChange}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
               />
             </div>
 
             {/* Date */}
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-1">Date</label>
+              <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Date</label>
               <input
                 required
                 type="date"
                 name="date"
                 value={formData.date}
                 onChange={handleInputChange}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
               />
             </div>
 
             {/* Direction */}
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-1">Direction</label>
+              <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Direction</label>
               <div className="grid grid-cols-2 gap-2">
                 <button
                     type="button"
                     onClick={() => setFormData(prev => ({ ...prev, direction: TradeDirection.LONG }))}
-                    className={`py-2 rounded-lg text-sm font-semibold border ${formData.direction === TradeDirection.LONG ? 'bg-emerald-500/20 border-emerald-500 text-emerald-400' : 'border-slate-700 text-slate-400 hover:bg-slate-800'}`}
+                    className={`py-2 rounded-lg text-sm font-semibold border transition-colors ${formData.direction === TradeDirection.LONG ? 'bg-emerald-500/10 border-emerald-500 text-emerald-600 dark:text-emerald-400' : 'border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
                 >
                     Long
                 </button>
                 <button
                     type="button"
                     onClick={() => setFormData(prev => ({ ...prev, direction: TradeDirection.SHORT }))}
-                    className={`py-2 rounded-lg text-sm font-semibold border ${formData.direction === TradeDirection.SHORT ? 'bg-red-500/20 border-red-500 text-red-400' : 'border-slate-700 text-slate-400 hover:bg-slate-800'}`}
+                    className={`py-2 rounded-lg text-sm font-semibold border transition-colors ${formData.direction === TradeDirection.SHORT ? 'bg-red-500/10 border-red-500 text-red-600 dark:text-red-400' : 'border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
                 >
                     Short
                 </button>
@@ -128,12 +128,12 @@ const TradeForm: React.FC<TradeFormProps> = ({ onCancel, initialData }) => {
 
             {/* Outcome */}
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-1">Outcome</label>
+              <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Outcome</label>
               <select
                 name="outcome"
                 value={formData.outcome}
                 onChange={handleInputChange}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
               >
                 {Object.values(TradeOutcome).map(o => (
                   <option key={o} value={o}>{o}</option>
@@ -143,7 +143,7 @@ const TradeForm: React.FC<TradeFormProps> = ({ onCancel, initialData }) => {
 
              {/* PnL */}
              <div>
-              <label className="block text-sm font-medium text-slate-400 mb-1">PnL ($)</label>
+              <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">PnL ($)</label>
               <input
                 required
                 type="number"
@@ -151,41 +151,41 @@ const TradeForm: React.FC<TradeFormProps> = ({ onCancel, initialData }) => {
                 step="0.01"
                 value={formData.pnl}
                 onChange={handleInputChange}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
               />
             </div>
 
              {/* Setup */}
              <div>
-              <label className="block text-sm font-medium text-slate-400 mb-1">Setup / Strategy</label>
+              <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Setup / Strategy</label>
               <input
                 type="text"
                 name="setup"
                 placeholder="e.g. S/R Flip"
                 value={formData.setup}
                 onChange={handleInputChange}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
               />
             </div>
           </div>
 
           {/* Notes */}
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1">Trade Notes & Psychology</label>
+            <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Trade Notes & Psychology</label>
             <textarea
               name="notes"
               rows={4}
               placeholder="What was your thought process? How did you feel?"
               value={formData.notes}
               onChange={handleInputChange}
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-indigo-500 outline-none resize-none"
+              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none resize-none"
             />
           </div>
 
           {/* Screenshot Upload */}
           <div>
-             <label className="block text-sm font-medium text-slate-400 mb-1">Chart Screenshot</label>
-             <div className="border-2 border-dashed border-slate-700 rounded-lg p-4 hover:bg-slate-800/50 transition-colors text-center cursor-pointer relative">
+             <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Chart Screenshot</label>
+             <div className="border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-lg p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors text-center cursor-pointer relative">
                 <input 
                     type="file" 
                     accept="image/*"
@@ -200,7 +200,7 @@ const TradeForm: React.FC<TradeFormProps> = ({ onCancel, initialData }) => {
                         </div>
                     </div>
                 ) : (
-                    <div className="py-8 text-slate-500">
+                    <div className="py-8 text-slate-500 dark:text-slate-400">
                         <div className="flex justify-center mb-2 text-indigo-500">{ICONS.Image}</div>
                         <p className="text-sm">Click to upload chart screenshot</p>
                         <p className="text-xs mt-1">Max 2MB</p>
@@ -209,11 +209,11 @@ const TradeForm: React.FC<TradeFormProps> = ({ onCancel, initialData }) => {
              </div>
           </div>
 
-          <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+          <div className="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
             <button
               type="button"
               onClick={onCancel}
-              className="px-6 py-2.5 rounded-lg text-slate-300 font-medium hover:bg-slate-800 transition-colors"
+              className="px-6 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
             >
               Cancel
             </button>

@@ -10,6 +10,7 @@ import TradeList from './components/TradeList';
 import TradeForm from './components/TradeForm';
 import TradeDetail from './components/TradeDetail';
 import { ICONS } from './constants';
+import { useTheme } from './context/ThemeContext';
 
 enum View {
   DASHBOARD = 'DASHBOARD',
@@ -18,6 +19,7 @@ enum View {
 
 const App: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { theme, toggleTheme } = useTheme();
   
   // Redux Selectors
   const user = useSelector((state: RootState) => state.auth.user);
@@ -63,13 +65,13 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 font-sans flex flex-col md:flex-row">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-200 font-sans flex flex-col md:flex-row transition-colors duration-300">
       
       {/* Sidebar Navigation */}
-      <aside className="w-full md:w-64 bg-slate-900 border-r border-slate-800 flex flex-col fixed md:relative bottom-0 md:h-screen z-40 order-2 md:order-1">
+      <aside className="w-full md:w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col fixed md:relative bottom-0 md:h-screen z-40 order-2 md:order-1 transition-colors duration-300">
         <div className="p-6 hidden md:block">
-          <div className="flex items-center gap-3 text-white font-bold text-xl">
-             <div className="bg-indigo-600 p-1.5 rounded-lg">{ICONS.Dashboard}</div>
+          <div className="flex items-center gap-3 text-slate-900 dark:text-white font-bold text-xl">
+             <div className="bg-indigo-600 text-white p-1.5 rounded-lg">{ICONS.Dashboard}</div>
              TradeMind
           </div>
         </div>
@@ -77,30 +79,30 @@ const App: React.FC = () => {
         <nav className="flex-1 p-4 space-y-2 flex md:block justify-around md:justify-start">
           <button 
             onClick={() => setCurrentView(View.DASHBOARD)}
-            className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all w-full ${currentView === View.DASHBOARD ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}`}
+            className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all w-full ${currentView === View.DASHBOARD ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'}`}
           >
             {ICONS.Dashboard} <span className="hidden md:inline">Dashboard</span>
           </button>
           
           <button 
             onClick={() => setCurrentView(View.JOURNAL)}
-            className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all w-full ${currentView === View.JOURNAL ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}`}
+            className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all w-full ${currentView === View.JOURNAL ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'}`}
           >
             {ICONS.Journal} <span className="hidden md:inline">Journal</span>
           </button>
         </nav>
 
-        <div className="p-4 border-t border-slate-800 hidden md:block">
-          <div className="flex items-center gap-3 px-4 py-3 text-slate-400">
+        <div className="p-4 border-t border-slate-200 dark:border-slate-800 hidden md:block">
+          <div className="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400">
             {ICONS.User}
             <div className="flex-1 overflow-hidden">
-                <p className="text-sm font-medium text-white truncate">{user.username}</p>
+                <p className="text-sm font-medium text-slate-900 dark:text-white truncate">{user.username}</p>
                 <p className="text-xs truncate">{user.email}</p>
             </div>
           </div>
           <button 
             onClick={handleLogout}
-            className="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-red-400 transition-colors w-full mt-2"
+            className="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:text-red-500 dark:hover:text-red-400 transition-colors w-full mt-2"
           >
             {ICONS.Logout} <span>Log Out</span>
           </button>
@@ -109,21 +111,36 @@ const App: React.FC = () => {
 
       {/* Main Content */}
       <main className="flex-1 h-screen overflow-y-auto order-1 md:order-2 pb-20 md:pb-0 relative">
-        <header className="sticky top-0 bg-slate-950/80 backdrop-blur-md z-30 px-6 py-4 border-b border-slate-800 flex justify-between items-center">
-          <h1 className="text-xl font-bold text-white">
-            {currentView === View.DASHBOARD ? 'Performance Dashboard' : 'Trade Journal'}
-          </h1>
-          <button 
-            onClick={openNewTradeForm}
-            className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg font-medium shadow-lg shadow-indigo-500/20 transition-all flex items-center gap-2 text-sm"
-          >
-            {ICONS.Plus} <span className="hidden sm:inline">Log Trade</span>
-          </button>
+        <header className="sticky top-0 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md z-30 px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center transition-colors duration-300">
+          <div className="flex items-center gap-4">
+             <div className="md:hidden flex items-center gap-2 font-bold text-slate-900 dark:text-white text-lg">
+                <div className="bg-indigo-600 text-white p-1 rounded">{ICONS.Dashboard}</div>
+                TradeMind
+             </div>
+             <h1 className="text-xl font-bold text-slate-900 dark:text-white hidden md:block">
+               {currentView === View.DASHBOARD ? 'Performance Dashboard' : 'Trade Journal'}
+             </h1>
+          </div>
+          
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={toggleTheme} 
+              className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors"
+            >
+              {theme === 'dark' ? ICONS.Sun : ICONS.Moon}
+            </button>
+            <button 
+              onClick={openNewTradeForm}
+              className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg font-medium shadow-lg shadow-indigo-500/20 transition-all flex items-center gap-2 text-sm"
+            >
+              {ICONS.Plus} <span className="hidden sm:inline">Log Trade</span>
+            </button>
+          </div>
         </header>
 
         <div className="p-6 max-w-7xl mx-auto">
           {!backendConnected && (
-             <div className="mb-6 bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-4 rounded-xl flex items-center justify-between">
+             <div className="mb-6 bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 px-4 py-4 rounded-xl flex items-center justify-between">
                 <div>
                     <h3 className="font-bold">Backend Connection Failed</h3>
                     <p className="text-sm mt-1">

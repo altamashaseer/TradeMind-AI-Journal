@@ -44,27 +44,27 @@ const TradeDetail: React.FC<TradeDetailProps> = ({ trade, onClose, onEdit }) => 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-end bg-black/60 backdrop-blur-sm">
-      <div className="h-full w-full md:w-[600px] bg-slate-900 border-l border-slate-700 shadow-2xl overflow-y-auto animate-slide-in-right">
+      <div className="h-full w-full md:w-[600px] bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-700 shadow-2xl overflow-y-auto animate-slide-in-right transition-colors duration-300">
         
         {/* Header */}
-        <div className="sticky top-0 bg-slate-900/95 backdrop-blur z-10 border-b border-slate-700 px-6 py-4 flex justify-between items-center">
+        <div className="sticky top-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur z-10 border-b border-slate-200 dark:border-slate-700 px-6 py-4 flex justify-between items-center transition-colors duration-300">
             <div>
-                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
                     {trade.instrument}
-                    <span className={`text-xs px-2 py-0.5 rounded-full border ${trade.direction === 'LONG' ? 'border-emerald-500 text-emerald-400 bg-emerald-500/10' : 'border-red-500 text-red-400 bg-red-500/10'}`}>
+                    <span className={`text-xs px-2 py-0.5 rounded-full border ${trade.direction === 'LONG' ? 'border-emerald-500 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10' : 'border-red-500 text-red-600 dark:text-red-400 bg-red-500/10'}`}>
                         {trade.direction}
                     </span>
                 </h2>
-                <p className="text-sm text-slate-400">{new Date(trade.date).toLocaleDateString()}</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400">{new Date(trade.date).toLocaleDateString()}</p>
             </div>
             <div className="flex gap-2">
-                <button onClick={() => onEdit(trade)} className="p-2 hover:bg-slate-800 rounded-full text-indigo-400 transition-colors" title="Edit Trade">
+                <button onClick={() => onEdit(trade)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-indigo-600 dark:text-indigo-400 transition-colors" title="Edit Trade">
                      {ICONS.Edit}
                 </button>
-                <button onClick={handleDelete} className="p-2 hover:bg-slate-800 rounded-full text-red-400 transition-colors" title="Delete Trade">
+                <button onClick={handleDelete} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-red-600 dark:text-red-400 transition-colors" title="Delete Trade">
                      {ICONS.Delete}
                 </button>
-                <button onClick={onClose} className="p-2 hover:bg-slate-800 rounded-full text-slate-400 transition-colors">
+                <button onClick={onClose} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-500 dark:text-slate-400 transition-colors">
                     {ICONS.Close}
                 </button>
             </div>
@@ -73,23 +73,23 @@ const TradeDetail: React.FC<TradeDetailProps> = ({ trade, onClose, onEdit }) => 
         <div className="p-6 space-y-8">
             {/* KPI Row */}
             <div className="grid grid-cols-2 gap-4">
-                <div className={`p-4 rounded-xl border ${trade.outcome === TradeOutcome.WIN ? 'bg-emerald-500/10 border-emerald-500/30' : trade.outcome === TradeOutcome.LOSS ? 'bg-red-500/10 border-red-500/30' : 'bg-slate-800 border-slate-700'}`}>
-                    <p className="text-sm text-slate-400 mb-1">PnL</p>
-                    <p className={`text-2xl font-bold ${trade.pnl >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                <div className={`p-4 rounded-xl border ${trade.outcome === TradeOutcome.WIN ? 'bg-emerald-500/10 border-emerald-500/30' : trade.outcome === TradeOutcome.LOSS ? 'bg-red-500/10 border-red-500/30' : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700'}`}>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">PnL</p>
+                    <p className={`text-2xl font-bold ${trade.pnl >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>
                         {trade.pnl > 0 ? '+' : ''}{trade.pnl}
                     </p>
                 </div>
-                <div className="p-4 rounded-xl bg-slate-800 border border-slate-700">
-                    <p className="text-sm text-slate-400 mb-1">Setup</p>
-                    <p className="text-lg font-semibold text-white">{trade.setup || 'N/A'}</p>
+                <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">Setup</p>
+                    <p className="text-lg font-semibold text-slate-900 dark:text-white">{trade.setup || 'N/A'}</p>
                 </div>
             </div>
 
             {/* Screenshot */}
             {trade.screenshotUrl && (
                 <div className="space-y-2">
-                    <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">Chart Snapshot</h3>
-                    <div className="rounded-xl overflow-hidden border border-slate-700 shadow-lg">
+                    <h3 className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Chart Snapshot</h3>
+                    <div className="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-lg bg-slate-100 dark:bg-slate-800">
                         <img src={trade.screenshotUrl} alt="Trade Setup" className="w-full h-full object-contain" />
                     </div>
                 </div>
@@ -97,16 +97,16 @@ const TradeDetail: React.FC<TradeDetailProps> = ({ trade, onClose, onEdit }) => 
 
             {/* Notes */}
             <div className="space-y-2">
-                <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">Trader Notes</h3>
-                <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700 text-slate-300 leading-relaxed whitespace-pre-wrap">
+                <h3 className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Trader Notes</h3>
+                <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">
                     {trade.notes}
                 </div>
             </div>
 
             {/* AI Analysis Section */}
-            <div className="pt-6 border-t border-slate-700">
+            <div className="pt-6 border-t border-slate-200 dark:border-slate-700">
                 <div className="flex justify-between items-center mb-4">
-                    <h3 className="flex items-center gap-2 text-indigo-400 font-bold uppercase tracking-wider text-sm">
+                    <h3 className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold uppercase tracking-wider text-sm">
                         {ICONS.AI} AI Coach Analysis
                     </h3>
                     {!analysis && (
@@ -121,10 +121,10 @@ const TradeDetail: React.FC<TradeDetailProps> = ({ trade, onClose, onEdit }) => 
                 </div>
 
                 {analysis ? (
-                    <div className="bg-indigo-950/30 border border-indigo-500/30 rounded-xl p-5 text-slate-300 text-sm leading-relaxed shadow-inner">
+                    <div className="bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-500/30 rounded-xl p-5 text-slate-700 dark:text-slate-300 text-sm leading-relaxed shadow-inner">
                         <ReactMarkdown 
                             components={{
-                                strong: ({node, ...props}) => <span className="font-bold text-indigo-300" {...props} />,
+                                strong: ({node, ...props}) => <span className="font-bold text-indigo-700 dark:text-indigo-300" {...props} />,
                                 ul: ({node, ...props}) => <ul className="list-disc pl-4 space-y-1 my-2" {...props} />,
                                 li: ({node, ...props}) => <li className="pl-1" {...props} />
                             }}
@@ -133,7 +133,7 @@ const TradeDetail: React.FC<TradeDetailProps> = ({ trade, onClose, onEdit }) => 
                         </ReactMarkdown>
                     </div>
                 ) : (
-                    <div className="text-center py-8 text-slate-500 bg-slate-800/20 rounded-xl border border-dashed border-slate-700">
+                    <div className="text-center py-8 text-slate-500 bg-slate-50 dark:bg-slate-800/20 rounded-xl border border-dashed border-slate-300 dark:border-slate-700">
                         {analyzing ? (
                             <div className="flex flex-col items-center gap-2">
                                 <span className="animate-spin text-indigo-500">{ICONS.Loading}</span>
