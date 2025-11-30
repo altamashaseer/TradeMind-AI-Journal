@@ -1,9 +1,13 @@
 import axios from 'axios';
 import { Trade, User } from '../types';
 
-// Use environment variable for API URL, fallback to localhost for development.
-// When deploying, set API_URL to your production backend address (e.g., "https://my-api.onrender.com/api")
-const API_URL = process.env.API_URL || 'http://localhost:5000/api';
+// Dynamic API URL Configuration
+// 1. If API_URL is explicitly set (e.g., Vercel + Render setup), use it.
+// 2. If NODE_ENV is 'production', use relative path '/api'. 
+//    This allows the app to work on ANY domain automatically when served by the backend.
+// 3. Fallback to localhost for local development.
+const isProduction = process.env.NODE_ENV === 'production';
+const API_URL = process.env.API_URL || (isProduction ? '/api' : 'http://localhost:5000/api');
 
 const client = axios.create({
   baseURL: API_URL,

@@ -58,75 +58,79 @@ JWT_SECRET=your_super_secret_random_string
 # Backend Configuration
 PORT=5000
 
-# Frontend Configuration (Optional)
-# Point this to your live backend URL when deploying the frontend
-API_URL=http://localhost:5000/api
-
 # AI Configuration
 API_KEY=your_google_gemini_api_key
+
+# Optional: Set this if deploying frontend separately
+# API_URL=https://your-api-url.com/api
 ```
 
 ### 2. Backend Setup
 The backend handles authentication, database connections, and API routes.
 
 ```bash
-# 1. Navigate to the root (or backend folder if you structure it that way)
+# 1. Navigate to the root
 # 2. Install backend dependencies
 npm install express mongoose cors dotenv bcryptjs jsonwebtoken
 
 # 3. Start the server
 node backend/server.js
 ```
-*The server will run on `http://localhost:5000`*
 
 ### 3. Frontend Setup
-To run the frontend locally using a modern build tool like **Vite**:
+To run the frontend locally:
 
-1.  **Initialize Project:**
-    ```bash
-    npm create vite@latest client -- --template react-ts
-    cd client
-    ```
+```bash
+# Initialize Vite (if not already done)
+npm create vite@latest client -- --template react-ts
+cd client
+npm install axios @reduxjs/toolkit react-redux lucide-react recharts react-markdown @google/genai
 
-2.  **Install Frontend Dependencies:**
-    You need to install the libraries used in the code:
-    ```bash
-    npm install axios @reduxjs/toolkit react-redux lucide-react recharts react-markdown @google/genai
-    ```
-
-3.  **Setup Tailwind CSS:**
-    If you are not using the CDN method (recommended for production), install Tailwind locally:
-    ```bash
-    npm install -D tailwindcss postcss autoprefixer
-    npx tailwindcss init -p
-    ```
-    *Configure your `tailwind.config.js` to scan your src files.*
-
-4.  **Add The Code:**
-    - Copy the `components`, `services`, `store`, `context`, `App.tsx`, `constants.tsx`, and `types.ts` files into your `src` folder.
-    - Ensure your `main.tsx` (or `index.tsx`) wraps the App in the Redux `Provider` and `ThemeProvider`.
-
-5.  **Run Development Server:**
-    ```bash
-    npm run dev
-    ```
-    *The frontend will typically run on `http://localhost:5173`. Open this URL in your browser.*
+# Run Development Server
+npm run dev
+```
 
 ---
 
-## ☁️ Deployment
+## ☁️ Deployment Guide
 
-### Deploying the Backend
-You can deploy the `backend` folder to services like **Render**, **Heroku**, or **Railway**.
-1.  Set the environment variables (`MONGODB_URI`, `JWT_SECRET`) in your hosting provider's dashboard.
-2.  The server listens on `process.env.PORT`.
+You can deploy this app in two ways: **Unified** (simpler) or **Separate** (more scalable).
 
-### Deploying the Frontend
-You can deploy the frontend to **Vercel**, **Netlify**, or AWS S3.
-1.  **Build Command:** `npm run build`
-2.  **Environment Variables:** If your backend is hosted separately (e.g., on Render), you **must** set the `API_URL` environment variable in your frontend hosting dashboard.
-    *   Example: `API_URL=https://my-trademind-api.onrender.com/api`
-3.  **CORS:** Ensure your backend handles CORS (Cross-Origin Resource Sharing) correctly for your frontend's domain.
+### Option A: Unified Deployment (Recommended for ease)
+Host both Frontend and Backend on the same server (e.g., Render, Railway, Heroku). The Node.js server will serve the API *and* the React frontend.
+
+1.  **Build Frontend:**
+    Inside your `client` folder, run:
+    ```bash
+    npm run build
+    ```
+    This creates a `dist` folder.
+
+2.  **Organize Folders:**
+    Ensure your structure looks like this:
+    ```
+    /root
+      /backend
+      /client
+        /dist  <-- The built files go here
+    ```
+
+3.  **Deploy:**
+    Push the entire root to your host. 
+    Start command: `NODE_ENV=production node backend/server.js`
+    
+    *The app will automatically serve the frontend at your domain `your-app.com` and the API at `your-app.com/api`.*
+
+### Option B: Separate Deployment
+Host Frontend on **Vercel/Netlify** and Backend on **Render/Railway**.
+
+1.  **Backend:** Deploy the `backend` folder. Get the URL (e.g., `https://my-api.onrender.com`).
+2.  **Frontend:** Deploy the `client` folder.
+3.  **Connect:** In your Vercel/Netlify dashboard, set the Environment Variable:
+    ```
+    API_URL=https://my-api.onrender.com/api
+    ```
+    *The frontend will now know where to send requests.*
 
 ---
 
@@ -137,26 +141,9 @@ You can deploy the frontend to **Vercel**, **Netlify**, or AWS S3.
 │   ├── models/         # Mongoose Schemas (User, Trade)
 │   └── server.js       # Express App & API Routes
 ├── components/         # React UI Components
-│   ├── Auth.tsx        # Login/Signup Forms
-│   ├── Dashboard.tsx   # Charts & Stats
-│   ├── TradeDetail.tsx # Individual Trade View + AI
-│   ├── TradeForm.tsx   # Add/Edit Modal
-│   └── TradeList.tsx   # Filterable Grid View
 ├── context/            # React Context (Theme)
 ├── services/           # API Logic
-│   ├── api.ts          # Axios setup & Interceptors
-│   └── geminiService.ts# AI Integration logic
 ├── store/              # Redux Toolkit Store
-│   ├── authSlice.ts    # User State
-│   └── tradeSlice.ts   # Trade Data State
 ├── App.tsx             # Main Layout & Routing
 └── index.tsx           # Entry Point
 ```
-
-## 🔒 Security Note
-- Passwords are hashed using `bcrypt` before storage.
-- API requests are protected via JWT Bearer tokens.
-- **Note:** For a production deployment, ensure you implement strict CORS policies and secure HTTP headers.
-
-## 📄 License
-MIT

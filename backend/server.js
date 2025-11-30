@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const path = require('path');
 
 const User = require('./models/User');
 const Trade = require('./models/Trade');
@@ -164,5 +165,19 @@ app.delete('/api/trades/:id', auth, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// -----------------------------------------
+// Deployment Configuration
+// -----------------------------------------
+// Serve static assets if in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  // Assumes client build is in ../client/dist or similar. Adjust path as needed.
+  app.use(express.static(path.join(__dirname, '../client/dist')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client/dist', 'index.html'));
+  });
+}
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
