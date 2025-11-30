@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { Trade, User } from '../types';
 
-const API_URL = 'http://localhost:5000/api';
+// Use environment variable for API URL, fallback to localhost for development.
+// When deploying, set API_URL to your production backend address (e.g., "https://my-api.onrender.com/api")
+const API_URL = process.env.API_URL || 'http://localhost:5000/api';
 
 const client = axios.create({
   baseURL: API_URL,
