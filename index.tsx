@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { store } from './store/index';
 import { ThemeProvider } from './context/ThemeContext';
 import App from './App';
+import './index.css'; 
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
