@@ -34,7 +34,8 @@ const Auth: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 p-4 transition-colors duration-300">
       <div className="absolute top-4 right-4">
         <button 
-          onClick={toggleTheme} 
+          onClick={toggleTheme}
+
           className="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors"
         >
           {theme === 'dark' ? ICONS.Sun : ICONS.Moon}

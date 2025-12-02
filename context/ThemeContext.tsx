@@ -16,6 +16,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
 
+
   useEffect(() => {
     const root = window.document.documentElement;
     if (theme === 'dark') {
