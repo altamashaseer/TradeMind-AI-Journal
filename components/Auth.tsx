@@ -4,6 +4,7 @@ import { loginUser, registerUser, clearError } from '../store/authSlice';
 import { AppDispatch, RootState } from '../store/index';
 import { ICONS } from '../constants';
 import { useTheme } from '../context/ThemeContext';
+import Navbar from './Navbar';
 
 const Auth: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -31,16 +32,10 @@ const Auth: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 p-4 transition-colors duration-300">
-      <div className="absolute top-4 right-4">
-        <button 
-          onClick={toggleTheme}
+    <> 
+      <Navbar title={isLogin ? 'Sign In' : 'Create Account'} theme={theme} onToggleTheme={toggleTheme} />
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 p-4 transition-colors duration-300">
 
-          className="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition-colors"
-        >
-          {theme === 'dark' ? ICONS.Sun : ICONS.Moon}
-        </button>
-      </div>
 
       <div className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-8 animate-fade-in-up transition-colors duration-300">
         <div className="text-center mb-8">
@@ -103,6 +98,7 @@ const Auth: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
