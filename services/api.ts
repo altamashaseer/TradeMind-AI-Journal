@@ -50,8 +50,15 @@ export const api = {
     }
   },
   trades: {
-    getAll: async (): Promise<Trade[]> => {
-      return client.get('/trades') as Promise<Trade[]>;
+    getAll: async (startDate?: string, endDate?: string): Promise<Trade[]> => {
+      const params = new URLSearchParams();
+      if (startDate) params.append('startDate', startDate);
+      if (endDate) params.append('endDate', endDate);
+
+      const queryString = params.toString();
+      const url = queryString ? `/trades?${queryString}` : '/trades';
+
+      return client.get(url) as Promise<Trade[]>;
     },
     create: async (trade: Omit<Trade, 'id' | 'createdAt'>): Promise<Trade> => {
       return client.post('/trades', trade) as Promise<Trade>;

@@ -196,7 +196,8 @@ html.dark .border-slate-200 {
 }
 
 html.dark .hover\:bg-slate-100:hover {
-  background-color: #1e293b !important;
+  background-color: #334155 !important;
+  color: #f1f5f9 !important;
 }
 
 html.dark .divide-slate-200 > :not([hidden]) ~ :not([hidden]) {
@@ -267,4 +268,67 @@ html.dark .text-indigo-700 {
 
 html.dark .border-slate-300 {
   border-color: #334155 !important;
+}
+
+/* Style the calendar icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
+/* Dark mode only */
+html.dark input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(1.2);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  background-color: rgba(99, 102, 241, 0.1);
+}
+
+/* Date Input Styling - Light Mode */
+html:not(.dark) input[type="date"] {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+html:not(.dark) input[type="date"]:focus {
+  background-color: #ffffff !important;
+  border-color: #4f46e5 !important;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1) !important;
+}
+
+html:not(.dark) input[type="date"]::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Ensure calendar icon is visible in light mode */
+html:not(.dark) input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: none;
+  opacity: 0.7;
+}
+
+html:not(.dark) input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+  background-color: transparent;
+}
+
+/* Date Input Styling - Dark Mode */
+html.dark input[type="date"] {
+  background-color: #334155 !important;
+  color: #f1f5f9 !important;
+  border-color: #475569 !important;
+}
+
+html.dark input[type="date"]:focus {
+  background-color: #1e293b !important;
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2) !important;
+}
+
+html.dark input[type="date"]::placeholder {
+  color: #64748b !important;
+}
+
+html.dark input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(1.2);
 }

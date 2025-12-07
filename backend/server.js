@@ -59,7 +59,7 @@ app.post('/api/auth/register', async (req, res) => {
     });
 
     const savedUser = await newUser.save();
-    
+
     // Create token
     const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET);
 
@@ -105,10 +105,29 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
-// Get Trades
+// Get Trades with optional date range filtering
 app.get('/api/trades', auth, async (req, res) => {
   try {
-    const trades = await Trade.find({ userId: req.user.id }).sort({ createdAt: -1 });
+    const { startDate, endDate } = req.query;
+    let query = { userId: req.user.id };
+
+    // Apply date range filter if provided
+    if (startDate || endDate) {
+      query.date = {};
+
+      if (startDate) {
+        // Start of the day
+        query.date.$gte = new Date(startDate).toISOString().split('T')[0];
+      }
+
+      if (endDate) {
+        // End of the day
+        query.date.$lte = new Date(endDate).toISOString().split('T')[0];
+      }
+    }
+
+    const trades = await Trade.find(query).sort({ createdAt: -1 });
+
     // Transform _id to id for frontend
     const formattedTrades = trades.map(t => ({
       ...t.toObject(),
@@ -126,7 +145,7 @@ app.post('/api/trades', auth, async (req, res) => {
     const tradeData = { ...req.body, userId: req.user.id };
     const newTrade = new Trade(tradeData);
     const savedTrade = await newTrade.save();
-    
+
     res.json({
       ...savedTrade.toObject(),
       id: savedTrade._id
@@ -144,9 +163,9 @@ app.put('/api/trades/:id', auth, async (req, res) => {
       req.body,
       { new: true }
     );
-    
+
     if (!updatedTrade) return res.status(404).json({ error: 'Trade not found' });
-    
+
     res.json({
       ...updatedTrade.toObject(),
       id: updatedTrade._id
