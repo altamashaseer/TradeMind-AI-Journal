@@ -186,18 +186,4 @@ app.delete('/api/trades/:id', auth, async (req, res) => {
   }
 });
 
-// -----------------------------------------
-// Deployment Configuration
-// -----------------------------------------
-// Serve static assets if in production
-if (process.env.NODE_ENV === 'production') {
-  // Set static folder
-  // Assumes client build is in ../client/dist or similar. Adjust path as needed.
-  app.use(express.static(path.join(__dirname, '../client/dist')));
-
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../client/dist', 'index.html'));
-  });
-}
-
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
