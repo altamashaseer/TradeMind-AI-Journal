@@ -10,7 +10,7 @@ const User = require('./models/User');
 const Trade = require('./models/Trade');
 
 const app = express();
-const PORT = process.env.SERVER_PORT;
+const PORT = process.env.PORT || process.env.SERVER_PORT;
 
 
 // Middleware

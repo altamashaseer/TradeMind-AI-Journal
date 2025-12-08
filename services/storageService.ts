@@ -1,6 +1,5 @@
+import { API_URL } from '@/constants';
 import { Trade, User } from '../types';
-
-const API_URL = 'http://localhost:5000/api';
 
 // --- Helper Functions ---
 

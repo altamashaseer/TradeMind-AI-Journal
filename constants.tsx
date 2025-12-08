@@ -25,4 +25,3 @@ export const ICONS = {
 };
 
 export const API_URL: string | undefined = process.env.API_URL; 
-console.log('API_URL :', API_URL);
