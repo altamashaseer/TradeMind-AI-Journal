@@ -24,4 +24,4 @@ export const ICONS = {
     Moon: <Moon size={20} />
 };
 
-export const API_URL: string | undefined = process.env.API_URL; 
+export const API_URL: string | undefined = process.env.VITE_API_URL; 

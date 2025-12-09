@@ -62,7 +62,7 @@ PORT=5000
 API_KEY=your_google_gemini_api_key
 
 # Optional: Set this if deploying frontend separately
-# API_URL=https://your-api-url.com/api
+# VITE_API_URL=https://your-api-url.com/api
 ```
 
 ### 2. Backend Setup
@@ -128,7 +128,7 @@ Host Frontend on **Vercel/Netlify** and Backend on **Render/Railway**.
 2.  **Frontend:** Deploy the `client` folder.
 3.  **Connect:** In your Vercel/Netlify dashboard, set the Environment Variable:
     ```
-    API_URL=https://my-api.onrender.com/api
+    VITE_API_URL=https://my-api.onrender.com/api
     ```
     *The frontend will now know where to send requests.*
 
